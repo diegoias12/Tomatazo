@@ -9,7 +9,7 @@ USE Tomatazo;
 DROP TABLE IF EXISTS TipoUsuario;
 CREATE TABLE IF NOT EXISTS TipoUsuario (
   IdTipoUsuario INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  TipoUsuario VARCHAR(32) NOT NULL COMMENT 'Tipo del Usuario (Persona o cliente)',
+  TipoUsuario VARCHAR(12) NOT NULL COMMENT 'Tipo del Usuario (Persona o cliente)',
   PRIMARY KEY (`IdTipoUsuario`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de clientes';
 
@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS Persona (
   IdPersona INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
   Nombre VARCHAR(45) NOT NULL,
   ApellidoPaterno VARCHAR(32) NOT NULL,
-  ApillidoMaterno VARCHAR(32),
+  ApellidoMaterno VARCHAR(32),
   Telefono VARCHAR(12),
   Email VARCHAR(45),
   Sexo char(1) COMMENT 'HOMBRE(H) O MUJER(M)',
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS Usuario (
     FotoPerfil VARCHAR(32) COMMENT 'URL de la imagen de perfil',
     TipoUsuario INT NOT NULL COMMENT 'foreign key que indica Persona o Empresa',
     IdTipoUsuario INT NOT NULL COMMENT 'Id de la persona o empresa',
-    HashPassword INT NOT NULL COMMENT 'Password',
+    HashPassword VARCHAR(64) NOT NULL COMMENT 'Password',
     Admin BOOL NOT NULL COMMENT 'Si es o no es admin',
     PRIMARY KEY(IdUsuario),
     FOREIGN KEY(TipoUsuario) REFERENCES TipoUsuario(IdTipoUsuario) ON DELETE CASCADE
@@ -198,6 +198,25 @@ delimiter ;
 
 -- INSERTS DE PRUEBA --
 
+-- ** inserts de los tipos de usuario ** --
+INSERT INTO TipoUsuario(TipoUsuario) VALUES ('Persona');
+INSERT INTO TipoUsuario(TipoUsuario) VALUES ('Empresa');
+
+-- ** insert de dos personas
+INSERT INTO Persona
+(Nombre, ApellidoPaterno, ApellidoMaterno,Telefono,Email,Sexo,FechaNacimiento)
+VALUES
+('Ruben Elihu','Trujano','Miranda','5570832124','ruben_3o@hotamil.com','H','1998-10-03');
+
+INSERT INTO Persona
+(Nombre, ApellidoPaterno, ApellidoMaterno,Telefono,Email,Sexo,FechaNacimiento)
+VALUES
+('Diego Israel','Alcantara','Salvitano','5584351084','diegoias_algo@gmail.com','H','1998-05-15');
+
+-- ** Creacion de Usuarios ** --
+
+INSERT INTO Usuario(TipoUsuario,IdTipoUsuario,HashPassword,Admin)
+VALUES (1,1,'1234',TRUE),(1,2,'1234',TRUE);
 
 -- ELIMINAR TODO --
 
