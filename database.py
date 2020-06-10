@@ -2,15 +2,14 @@ import mysql.connector as ms
 
 mydb = ms.connect(
     host = 'localhost',
-    user = 'user',
-    passwd = 'pass',
-    port = '3306'
+    user = 'diegoias',
+    passwd = 'dianalcf',
+    database = 'Tomatazo',
 )   
 
 cursor = mydb.cursor()
 
-cursor.execute('CREATE DATABASE tomatazo')
+cursor.execute('SELECT * FROM Persona')
 
-cursor.execute('SHOW databases')
 for x in cursor:
     print(x)
