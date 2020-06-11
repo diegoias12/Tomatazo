@@ -1,65 +1,59 @@
 -- CREACION DE LA BASE DE DATOS --
 
-CREATE DATABASE Tomatazo;
+#CREATE DATABASE Tomatazo;
 
 USE Tomatazo;
 
 -- CREACION DE LAS TABLAS --
 
-DROP TABLE IF EXISTS TipoUsuario;
-CREATE TABLE IF NOT EXISTS TipoUsuario (
-  IdTipoUsuario INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  TipoUsuario VARCHAR(12) NOT NULL COMMENT 'Tipo del Usuario (Persona o cliente)',
-  PRIMARY KEY (`IdTipoUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de clientes';
-
-DROP TABLE IF EXISTS Persona;
-CREATE TABLE IF NOT EXISTS Persona (
-  IdPersona INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  Nombre VARCHAR(45) NOT NULL,
-  ApellidoPaterno VARCHAR(32) NOT NULL,
-  ApellidoMaterno VARCHAR(32),
-  Telefono VARCHAR(12),
-  Email VARCHAR(45),
-  Sexo char(1) COMMENT 'HOMBRE(H) O MUJER(M)',
-  FechaNacimiento DATE NOT NULL,
-  PRIMARY KEY (IdPersona)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de Personas';
-
-DROP TABLE IF EXISTS Empresa;
-CREATE TABLE IF NOT EXISTS Empresa (
-  IdEmpresa INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  Nombre VARCHAR(50) NOT NULL,
-  Telefono VARCHAR(12),
-  Email VARCHAR(45),
-  PRIMARY KEY (IdEmpresa)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de Empresas';
-
-DROP TABLE IF EXISTS Tag;
-CREATE TABLE IF NOT EXISTS Tag (
-  IdTag INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  Tag VARCHAR(32) NOT NULL COMMENT 'Tag para identificar los videos',
-  PRIMARY KEY (IdTag)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de Tags';
-
-DROP TABLE IF EXISTS TipoReaccion;
-CREATE TABLE IF NOT EXISTS TipoReaccion (
-  IdTipoReaccion INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-  TipoReaccion varchar(32) NOT NULL COMMENT 'Ruta de la imagen para el tipo de reaccion',
-  PRIMARY KEY (IdTipoReaccion)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de los diferentes tipos de reacciones';
-
 DROP TABLE IF EXISTS Usuario;
 CREATE TABLE IF NOT EXISTS Usuario (
 	IdUsuario INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
-    FotoPerfil VARCHAR(32) COMMENT 'URL de la imagen de perfil',
-    TipoUsuario INT NOT NULL COMMENT 'foreign key que indica Persona o Empresa',
-    IdTipoUsuario INT NOT NULL COMMENT 'Id de la persona o empresa',
-    HashPassword VARCHAR(64) NOT NULL COMMENT 'Password',
+    UserName VARCHAR(32) NOT NULL COMMENT 'Username del Usuario',
+	FotoPerfil VARCHAR(32) COMMENT 'URL de la imagen de perfil',
+    TipoUsuario INT NOT NULL COMMENT 'Indica Persona o Empresa',
+    HashPassword VARCHAR(60) NOT NULL COMMENT 'Password', 
+	Telefono VARCHAR(12),
+  	Email VARCHAR(45) NOT NULL,
     Admin BOOL NOT NULL COMMENT 'Si es o no es admin',
-    PRIMARY KEY(IdUsuario),
-    FOREIGN KEY(TipoUsuario) REFERENCES TipoUsuario(IdTipoUsuario) ON DELETE CASCADE
+    PRIMARY KEY(IdUsuario)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Usuarios de la aplicacion';
+
+DROP TABLE IF EXISTS Persona;
+CREATE TABLE IF NOT EXISTS Persona (
+  	IdPersona INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
+  	Nombre VARCHAR(22) NOT NULL,
+  	ApellidoPaterno VARCHAR(16) NOT NULL,
+  	ApellidoMaterno VARCHAR(16),
+	IdUsuario INT NOT NULL COMMENT 'Clave del usuario',
+  	Sexo char(1) COMMENT 'HOMBRE(H) O MUJER(M)',
+  	FechaNacimiento DATE NOT NULL,
+  	PRIMARY KEY (IdPersona),
+	FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
+) 	ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Tabla de Personas';
+
+DROP TABLE IF EXISTS Empresa;
+CREATE TABLE IF NOT EXISTS Empresa (
+  	IdEmpresa INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
+  	Nombre VARCHAR(50) NOT NULL,
+  	IdUsuario INT NOT NULL COMMENT 'Clave del usuario',
+  	PRIMARY KEY (IdEmpresa),
+	FOREIGN KEY (IdUsuario) REFERENCES Usuario(IdUsuario)
+)	ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de Empresas';
+
+DROP TABLE IF EXISTS Tag;
+CREATE TABLE IF NOT EXISTS Tag (
+  	IdTag INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
+  	Tag VARCHAR(45) NOT NULL COMMENT 'Tag para identificar los videos',
+  	PRIMARY KEY (IdTag)
+) 	ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de Tags';
+
+DROP TABLE IF EXISTS TipoReaccion;
+CREATE TABLE IF NOT EXISTS TipoReaccion (
+  	IdTipoReaccion INT NOT NULL AUTO_INCREMENT COMMENT 'Clave primaria',
+  	TipoReaccion varchar(20) NOT NULL COMMENT 'Ruta de la imagen para el tipo de reaccion',
+  	PRIMARY KEY (IdTipoReaccion)
+) 	ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='tabla de los diferentes tipos de reacciones';
 
 DROP TABLE IF EXISTS RalacionFollow;
 CREATE TABLE IF NOT EXISTS RelacionFollow(
@@ -163,17 +157,6 @@ BEGIN
 END; //
 delimiter ;
 
--- ELIMINAR TIPO DE USUARIO --
-
-delimiter //
-CREATE TRIGGER Eliminar_TipoUsuario
-BEFORE DELETE
-ON  Usuario FOR EACH ROW
-BEGIN
-	DELETE FROM Usuario WHERE IdTipoUsuario = OLD.IdTipoUsuario;
-END; //
-delimiter ;
-
 -- ELIMINAR PERSONA --
 
 delimiter //
@@ -181,7 +164,7 @@ CREATE TRIGGER Eliminar_Persona
 BEFORE DELETE
 ON Persona FOR EACH ROW
 BEGIN
-	DELETE FROM Usuario WHERE IdTipoUsuario = OLD.IdPersona;
+	DELETE FROM Usuario WHERE IdUsuario = OLD.IdUsuario;
 END; //
 delimiter ;
 
@@ -192,31 +175,19 @@ CREATE TRIGGER Eliminar_Empresa
 BEFORE DELETE
 ON Empresa FOR EACH ROW
 BEGIN
-	DELETE FROM Usuario WHERE IdTipoUsuario = OLD.IdEmpresa;
+	DELETE FROM Usuario WHERE IdUsuario = OLD.IdUsuario;
 END; //
 delimiter ;
 
 -- INSERTS DE PRUEBA --
 
--- ** inserts de los tipos de usuario ** --
-INSERT INTO TipoUsuario(TipoUsuario) VALUES ('Persona');
-INSERT INTO TipoUsuario(TipoUsuario) VALUES ('Empresa');
+INSERT INTO Usuario(UserName, TipoUsuario, HashPassword, Email, Admin ) VALUES
+('RubenRETM',1,'1234','ruben_3o@hotmail.com',TRUE),
+('Diegoias',1,'1234','diego_algo@gmail.com',TRUE);
 
--- ** insert de dos personas
-INSERT INTO Persona
-(Nombre, ApellidoPaterno, ApellidoMaterno,Telefono,Email,Sexo,FechaNacimiento)
-VALUES
-('Ruben Elihu','Trujano','Miranda','5570832124','ruben_3o@hotamil.com','H','1998-10-03');
-
-INSERT INTO Persona
-(Nombre, ApellidoPaterno, ApellidoMaterno,Telefono,Email,Sexo,FechaNacimiento)
-VALUES
-('Diego Israel','Alcantara','Salvitano','5584351084','diegoias_algo@gmail.com','H','1998-05-15');
-
--- ** Creacion de Usuarios ** --
-
-INSERT INTO Usuario(TipoUsuario,IdTipoUsuario,HashPassword,Admin)
-VALUES (1,1,'1234',TRUE),(1,2,'1234',TRUE);
+INSERT INTO Persona(Nombre,ApellidoPaterno, ApellidoMaterno, IdUsuario,Sexo,FechaNacimiento) VALUES
+('Ruben Elihu','Trujano','Miranda', 1, 'H','1998-10-03'),
+('Diego Israel', 'Alcnatara','Salvitano',2,'H','1998-05-15');
 
 -- ELIMINAR TODO --
 
