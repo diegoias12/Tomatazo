@@ -6,6 +6,8 @@ from flask import request
 from flask import session
 from flask import abort
 
+from database import mydb
+
 import os
 
 app = Flask(__name__)
@@ -19,7 +21,17 @@ def home():
 
 @app.route('/login', methods=['POST'])
 def login():
-    if request.form['username'] == 'admin' and request.form['password'] == 'pass':
+
+    user_email = request.form['username']
+    paswd = request.form['password']
+
+    cursor = mydb.cursor()
+    cursor.execute('SELECT HashPassword FROM Usuario WHERE UserName = "%s"' % user_email)
+    result = cursor.fetchone()
+    if result is None:
+        return home()
+
+    if paswd == result[0]:
         session['logged_in'] = True
     else:
         flash('Wrong password')
