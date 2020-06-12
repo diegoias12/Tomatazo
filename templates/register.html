@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Usuario</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $("#formulario_persona").hide();
+
+            $("#persona").click(function() {
+                $("#formulario_persona").slideDown("slow");
+            });
+
+            $("#empresa").click(function() {
+                $("#formulario_persona").slideUp("slow");
+            });
+        });
+    </script>
+</head>
+
+<body>
+
+    {% if mensaje != "" %}
+    <p>{{ mensaje }} </p>
+    {% endif %}
+
+    <form class="contacto" action="/register" method="POST">
+        <fieldset>
+            <legend>Información Personal</legend>
+            <div>
+                <label for="persona"> Persona </label>
+                <input type="radio" name="tipo_usuario" value="1" id="persona" required>
+
+                <label for="empresa"> Empresa </label>
+                <input type="radio" name="tipo_usuario" value="2" id="empresa">
+            </div>
+
+            <label for="nombre"> Nombre: </label>
+            <input type="text" value="" placeholder="Nombre" name="nombre" required>
+
+            <div id="formulario_persona">
+                <label for="apellido_paterno"> Apellido paterno:</label>
+                <input type="text" value="" placeholder="Apellido paterno" name="apellido_paterno">
+
+                <label for="apellido_materno"> Apellido materno: </label>
+                <input type="text" value="" placeholder="Apellido materno" name="apellido_materno">
+
+                <div>
+                    <label for="hombre"> Hombre </label>
+                    <input type="radio" name="sexo" value="H" id="hombre">
+
+                    <label for="mujer"> Mujer </label>
+                    <input type="radio" name="sexo" value="M" id="mujer">
+
+                    <label for="otros"> Prefiero no decir </label>
+                    <input type="radio" name="sexo" value="N" id="otros" checked>
+                </div>
+
+                <label for="fecha_nacimiento"> Fecha de nacimiento</label>
+                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento">
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>Datos del Usuario</legend>
+            <label for="username">Ingresa tu nombre de usuario</label>
+            <input type="text" value="" placeholder="Username" name="username" required>
+
+            <br>
+
+            <label for="email">E-mail:</label>
+            <input type="email" value="" id="email" name="email" placeholder="Tu correo electrónico" required>
+
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" value="" id="telefono" name="telefono" placeholder="Tu teléfono" required>
+
+            <br>
+
+            <label for="password">Ingresa tu contraseña</label>
+            <input type="password" value="" placeholder="Password" name="password" id="password" required>
+
+            <br>
+
+            <label for="password2">Vuelve a ingresar tu contraseña </label>
+            <input type="password" value="" placeholder="Password" name="password2" id="password2" required>
+        </fieldset>
+
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+
+</html>
