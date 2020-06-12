@@ -1,0 +1,11 @@
+.header {
+    background-color: aqua;
+}
+
+.search_bar input {
+    padding: 6px;
+    border: none;
+    border-radius: 25px;
+    margin: 10px;
+    font-size: 17px;
+}

@@ -42,6 +42,14 @@ def logout():
     session['logged_in'] = False
     return home()
 
+@app.route('/profile')
+def profile():
+    return render_template('profile.html')
+
+@app.route('/explore')
+def explore():
+    return render_template('explore.html')
+
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)
     app.run(debug=True)

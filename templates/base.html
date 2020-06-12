@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    {% block head_js %}
+    {% endblock %}
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../static/css/base.css">
+    {% block head_css %}
+    {% endblock %}
+</head>
+
+<body>
+
+    <div class="header">
+        <a href="/"> Logo </a>
+        <div class="search_bar">
+            <form action="/explore" method="GET">
+                <input type="text" placeholder="Search" name="search">
+                <button type="submit"></button>
+            </form>
+        </div>
+        <a href="/profile"> Picture </a>
+        <a href="/profile"> username </a>
+    </div>
+
+    <div class="menu">
+
+    </div>
+
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+</body>
+
+</html>
