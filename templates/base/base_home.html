@@ -1,0 +1,59 @@
+<html>
+	<head>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base_home.css') }}">
+
+        {% block rulescss %}
+        {% endblock %}
+
+        {% block rulesjs %}
+        {% endblock %}
+	</head>
+    <body>
+    	<!-- Parte de arriba -->
+        <div class="up", align="top"> 
+        	<div>
+        		<img id="imgHome" src="{{url_for('static', filename='img/inicio.png')}}" alt ="Aqui va el logo" align="left">
+        	</div>
+        	
+        	<div class="search">
+        		<input type="text" name="buscar" style="width: 430%;">
+        	</div>
+
+        	<div class = "myporfile">
+
+        		<div id="imgPorfile">
+        			<img src="{{url_for('static', filename='img/inicio.png')}}",alt ="foto de perfil"style="width: 75%;">
+        		</div>
+
+        		<div id="textPorfile1">
+        			<p>Nombre</p>
+        		</div>
+
+        		<div id="textPorfile2">
+        			<p>No. Subs.</p>
+        		</div>
+        	</div>
+        </div>
+        <!-- Fin Parte de arriba -->
+
+        {% block content %}
+        {% endblock %}
+
+        <!-- Parte de la izquierda -->
+        <div class = "left" align="left">
+        	<div>
+        		<img id="imgLeft" src="{{url_for('static', filename='img/inicio.png')}}",alt ="Tendencias", align="center">
+        	</div>
+        	<div>
+        		<img id="imgLeft" src="{{url_for('static', filename='img/inicio.png')}}",alt ="Peliculas", align="center">
+        	</div>
+        	<div>
+        		<img id="imgLeft"  src="{{url_for('static', filename='img/inicio.png')}}",alt ="Series", align="center">
+        	</div>
+        </div>
+        <!-- Fin Parte de la izquierda -->
+
+
+        
+    </body>
+</html>
