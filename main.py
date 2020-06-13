@@ -5,6 +5,7 @@ from flask import render_template
 from flask import request
 from flask import session
 from flask import abort
+from flask import url_for
 
 from database import mydb
 
@@ -121,6 +122,11 @@ def register():
     mydb.commit()
     session['logged_in'] = True
     return home()
+
+## ELIMINAR ELIMINAR ELIMINAR
+@app.route('/post')
+def post():
+    return render_template('post_home.html')
 
 if __name__ == '__main__':
     app.secret_key = os.urandom(12)

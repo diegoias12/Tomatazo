@@ -1,9 +1,30 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
 
-{% block content %}
+<head>
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
 
-<h1> Estas dentro </h1>
-<a href="/logout"><button>Log out</button></a>
+</head>
 
-{% endblock %}
+<body>
+
+    <div class="content">
+        <div id="prueba"></div>
+
+        <h1> Estas dentro </h1>
+        <a href="/logout"><button>Log out</button></a>
+
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            $('#prueba').load('post_home.html');
+        });
+    </script>
+
+</body>
+
+</html>
 
