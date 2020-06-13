@@ -1,9 +1,24 @@
-<h1> Iniciar sesion </h1>
+{% extends 'base/base_html.html' %}
 
-<form action="/login" method="POST">
-    <input type="text" value="" placeholder="username" name="username">
-    <input type="password" value="" placeholder="password" name="password">
-    <input type="submit" value="Log in">
-</form>
+{% block  title%} Iniciar Sesión {% endblock  %}
 
-<button><a href="/registration_form">Registrarse</a></button>
+{% block rulescss %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock  %}
+
+{% block content %}
+<main class="main-text">
+    <div class="contenedor seccion contenido-centrado">
+        <h1> Iniciar sesion </h1>
+        
+        <form class="formulario" action="/login" method="POST">
+            <input type="text" value="" placeholder="username" name="username">
+            <input type="password" value="" placeholder="password" name="password">
+            
+            <input class="boton boton-azul" type="submit" value="Log in">
+        </form>
+    </div>
+
+<button class="boton boton-azul"> <a href="/registration_form">Registrarse</a> </button>
+</main>
+{% endblock %}

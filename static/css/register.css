@@ -1,0 +1,14 @@
+a {
+    color: white;
+}
+.mensaje-alerta {
+    margin-top: 0;
+    background-color: rgb(250, 73, 73);
+}
+
+.seccion-radio{
+    max-width: 30rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

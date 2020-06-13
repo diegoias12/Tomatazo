@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title> {% block title %}{% endblock %}</title>
+    
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/normalize.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/utilidades.css') }}">
+    {% block rulescss %}
+    {% endblock %}
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {% block rulesjs %}
+    {% endblock %}
+</head>
+<body>
+    <header class="header-login">
+        <p>Tomatazo</p>
+    </header>
+
+    {% block content %}
+        
+    {% endblock %}
+
+    <footer class="footer-login">
+       <p> Derechos reservados 2020  </p> 
+    </footer>
+</body>
+</html>

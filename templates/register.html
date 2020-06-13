@@ -1,95 +1,91 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base/base_html.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Usuario</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $("#formulario_persona").hide();
+{% block  title%} Registrarse {% endblock  %}
 
-            $("#persona").click(function() {
-                $("#formulario_persona").slideDown("slow");
-            });
+{% block rulescss %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/register.css') }}">
+{% endblock  %}
 
-            $("#empresa").click(function() {
-                $("#formulario_persona").slideUp("slow");
-            });
+{% block rulesjs %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $("#formulario_persona").hide();
+
+        $("#persona").click(function() {
+            $("#formulario_persona").slideDown("slow");
         });
-    </script>
-</head>
 
-<body>
+        $("#empresa").click(function() {
+            $("#formulario_persona").slideUp("slow");
+        });
+    });
+</script>
+{% endblock %}
 
-    {% if mensaje != "" %}
-    <p>{{ mensaje }} </p>
-    {% endif %}
+{% block content %}
 
-    <form class="contacto" action="/register" method="POST">
-        <fieldset>
-            <legend>Información Personal</legend>
-            <div>
-                <label for="persona"> Persona </label>
-                <input type="radio" name="tipo_usuario" value="1" id="persona" required>
+{% if mensaje != "" %}
+<p class="mensaje-alerta">{{ mensaje }} </p>
+{% endif %}
 
-                <label for="empresa"> Empresa </label>
-                <input type="radio" name="tipo_usuario" value="2" id="empresa">
+<form class="contenedor seccion contenido-centredo contacto" action="/register" method="POST">
+    <fieldset>
+        <legend>Información Personal</legend>
+        <div class="seccion-radio">
+            <label for="persona"> Persona </label>
+            <input type="radio" name="tipo_usuario" value="1" id="persona" required>
+
+            <label for="empresa"> Empresa </label>
+            <input type="radio" name="tipo_usuario" value="2" id="empresa">
+        </div>
+
+        <label for="nombre"> Nombre: </label>
+        <input type="text" value="" placeholder="Nombre" name="nombre" required>
+
+        <div id="formulario_persona">
+            <label for="apellido_paterno"> Apellido paterno:</label>
+            <input type="text" value="" placeholder="Apellido paterno" name="apellido_paterno">
+
+            <label for="apellido_materno"> Apellido materno: </label>
+            <input type="text" value="" placeholder="Apellido materno" name="apellido_materno">
+
+            <div class="seccion-radio">
+                <label for="hombre"> Hombre </label>
+                <input type="radio" name="sexo" value="H" id="hombre">
+
+                <label for="mujer"> Mujer </label>
+                <input type="radio" name="sexo" value="M" id="mujer">
+
+                <label for="otros"> Prefiero no decir </label>
+                <input type="radio" name="sexo" value="N" id="otros" checked>
             </div>
 
-            <label for="nombre"> Nombre: </label>
-            <input type="text" value="" placeholder="Nombre" name="nombre" required>
+            <label for="fecha_nacimiento"> Fecha de nacimiento</label>
+            <input type="date" name="fecha_nacimiento" id="fecha_nacimiento">
+        </div>
+    </fieldset>
 
-            <div id="formulario_persona">
-                <label for="apellido_paterno"> Apellido paterno:</label>
-                <input type="text" value="" placeholder="Apellido paterno" name="apellido_paterno">
+    <fieldset class="seccion">
+        <legend>Datos del Usuario</legend>
+        <label for="username">Ingresa tu nombre de usuario</label>
+        <input type="text" value="" placeholder="Username" name="username" required>
 
-                <label for="apellido_materno"> Apellido materno: </label>
-                <input type="text" value="" placeholder="Apellido materno" name="apellido_materno">
+        <label for="email">E-mail:</label>
+        <input type="email" value="" id="email" name="email" placeholder="Tu correo electrónico" required>
 
-                <div>
-                    <label for="hombre"> Hombre </label>
-                    <input type="radio" name="sexo" value="H" id="hombre">
+        <label for="telefono">Teléfono:</label>
+        <input type="tel" value="" id="telefono" name="telefono" placeholder="Tu teléfono" required>
 
-                    <label for="mujer"> Mujer </label>
-                    <input type="radio" name="sexo" value="M" id="mujer">
+        <label for="password">Ingresa tu contraseña</label>
+        <input type="password" value="" placeholder="Password" name="password" id="password" required>
 
-                    <label for="otros"> Prefiero no decir </label>
-                    <input type="radio" name="sexo" value="N" id="otros" checked>
-                </div>
+        <label for="password2">Vuelve a ingresar tu contraseña </label>
+        <input type="password" value="" placeholder="Password" name="password2" id="password2" required>
+    </fieldset>
 
-                <label for="fecha_nacimiento"> Fecha de nacimiento</label>
-                <input type="date" name="fecha_nacimiento" id="fecha_nacimiento">
-            </div>
-        </fieldset>
+    <input class="boton boton-azul" type="submit" value="Enviar">
+</form>
 
-        <fieldset>
-            <legend>Datos del Usuario</legend>
-            <label for="username">Ingresa tu nombre de usuario</label>
-            <input type="text" value="" placeholder="Username" name="username" required>
-
-            <br>
-
-            <label for="email">E-mail:</label>
-            <input type="email" value="" id="email" name="email" placeholder="Tu correo electrónico" required>
-
-            <label for="telefono">Teléfono:</label>
-            <input type="tel" value="" id="telefono" name="telefono" placeholder="Tu teléfono" required>
-
-            <br>
-
-            <label for="password">Ingresa tu contraseña</label>
-            <input type="password" value="" placeholder="Password" name="password" id="password" required>
-
-            <br>
-
-            <label for="password2">Vuelve a ingresar tu contraseña </label>
-            <input type="password" value="" placeholder="Password" name="password2" id="password2" required>
-        </fieldset>
-
-        <input type="submit" value="Enviar">
-    </form>
-</body>
-
-</html>
+<button class="boton boton-azul"> <a href="/"> cancelar </a> </button>
+{% endblock %}
