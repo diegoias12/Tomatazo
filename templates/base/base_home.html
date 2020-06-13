@@ -1,10 +1,10 @@
 <html>
 	<head>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/base_home.css') }}">
-
         {% block rulescss %}
         {% endblock %}
 
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         {% block rulesjs %}
         {% endblock %}
 	</head>
@@ -12,7 +12,7 @@
     	<!-- Parte de arriba -->
         <div class="up", align="top"> 
         	<div>
-        		<img id="imgHome" src="{{url_for('static', filename='img/inicio.png')}}" alt ="Aqui va el logo" align="left">
+        		<img id="imgHome" src="{{url_for('static', filename='images/inicio.png')}}" alt ="Aqui va el logo" align="left">
         	</div>
         	
         	<div class="search">
@@ -22,7 +22,7 @@
         	<div class = "myporfile">
 
         		<div id="imgPorfile">
-        			<img src="{{url_for('static', filename='img/inicio.png')}}",alt ="foto de perfil"style="width: 75%;">
+        			<img src="{{url_for('static', filename='images/inicio.png')}}",alt ="foto de perfil"style="width: 75%;">
         		</div>
 
         		<div id="textPorfile1">
@@ -36,19 +36,21 @@
         </div>
         <!-- Fin Parte de arriba -->
 
-        {% block content %}
+		{% block content %}
+		<div class="content">
+		</div>
         {% endblock %}
 
         <!-- Parte de la izquierda -->
         <div class = "left" align="left">
         	<div>
-        		<img id="imgLeft" src="{{url_for('static', filename='img/inicio.png')}}",alt ="Tendencias", align="center">
+        		<img id="imgLeft" src="{{url_for('static', filename='images/inicio.png')}}",alt ="Tendencias", align="center">
         	</div>
         	<div>
-        		<img id="imgLeft" src="{{url_for('static', filename='img/inicio.png')}}",alt ="Peliculas", align="center">
+        		<img id="imgLeft" src="{{url_for('static', filename='images/inicio.png')}}",alt ="Peliculas", align="center">
         	</div>
         	<div>
-        		<img id="imgLeft"  src="{{url_for('static', filename='img/inicio.png')}}",alt ="Series", align="center">
+        		<img id="imgLeft"  src="{{url_for('static', filename='images/inicio.png')}}",alt ="Series", align="center">
         	</div>
         </div>
         <!-- Fin Parte de la izquierda -->
